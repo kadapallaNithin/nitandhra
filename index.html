@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="/css/materialize.min.css" rel="stylesheet" />
+</head>
+<body>
+    <nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Logo</a>
+        <a href="#mobiledemo" data-activates="mobile-demo" class="button-collapse">Menu</a>
+        <ul class="right   hide-on-med-and-down" id="side">
+            <li><a href="./js">js</a></li>
+            <li><a href="./next/">Next</a></li>
+            <li><a href="./index.html">Home</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+            <li><a href="./js">js</a></li>
+            <li><a href="./next/">Next</a></li>
+            <li><a href="./before">Before</a></li>
+        </ul>
+    </div>
+        </nav>
+    <br />
+    <div class="container">
+        <div class="row ">
+            <div class="card-panel col s6"><a href="./forum/" style="color:blue">Forum</a></div>
+            <div class="card-panel col s6"><a href="./magazine" style="color:blue">Magazine</a></div>
+            <div class="card-panel col s6"><a href="./Apps">Apps</a></div>
+        </div>
+        
+    </div>
+
+    <script src="/js/materialize.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".button-collapse").sideNav();
+            alert('hi');
+
+        });
+        /*
+        var side = document.getElementById('side');
+        var links = [["./index.html", "Home"], ["./next", "next"], ["./before", "Before"]];
+        for (var itr = 0; itr < links.lenght; itr++) {
+
+        }*/
+
+    </script>
+</body>
+</html>
