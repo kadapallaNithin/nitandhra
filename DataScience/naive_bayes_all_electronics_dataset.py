@@ -1,5 +1,5 @@
 import math
-def naive_bayes(x,offst):
+def naive_bayes(df,x,offst):
     pk = 'RID'
     clas = 'class'
     cl = df[[clas,pk]].groupby(clas).count()
