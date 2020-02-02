@@ -20,20 +20,19 @@ class Pre:Parser{
 			pre();
 			return i == len-1;
 		}
-		void read_parse(){
-			read();
-			if(parse())
-				cout<<"Success";
-			else
-				cout<<"Error";
-//			i = 0;
-//			pre();
+		void readnparse(){
+			read_parse('\n');
 		}
-
-};
+};/*
+bool Pre::parse(){
+			i = 0;
+			pre();
+			return i == len-1;
+}
+*/
 int main(){
 	Pre p;
-	p.read_parse();
+	p.readnparse();
 //cout<<"Hello world";
 	return 0;
 }

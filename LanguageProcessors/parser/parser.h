@@ -20,7 +20,7 @@ class Parser{
 				return false;
 			}
 		}
-		void read(char deli){
+		void read(char deli = '\n'){
 			char c = ' ';
 			while(c != deli && len < MAX_SI){
 				c = getchar();
@@ -28,15 +28,30 @@ class Parser{
 				len++;
 			}
 		}
-		void read(){
-			read('\n');
-		}
-		void parse(){
+		virtual bool parse() = 0;//			i = 0;
+		
+		bool parse_f(int* pos){
 			i = 0;
+			if(parse()&& (i == len - 1)){
+				return true;
+			}else{
+				*pos = i;
+				return false;
+			}
 		}
 		/*void read_parse(){
 			read();
 			parse();
 //			pre();
 		}*/
+		void read_parse(char deli = '\n'){
+			read('\n');
+			int pos;
+			if(parse_f(&pos))
+				cout<<"Success";
+			else
+				cout<<"Error at "<<pos;
+//			i = 0;
+//			pre();
+		}
 };
