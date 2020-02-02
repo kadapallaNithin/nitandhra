@@ -3,7 +3,7 @@ using namespace std;
 #define MAX_SI 300
 class Parser{
 	public:
-		char input[300];
+		char input[MAX_SI];
 		int i;
 		int len;
 
