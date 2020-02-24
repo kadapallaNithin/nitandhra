@@ -1,40 +1,42 @@
 <!DOCTYPE html> 
 <html> 
- 
-<head> 
+ <head> 
  <meta name="viewport" content="width=device-width, initial-scale=1"> 
  
  <style> 
   table { 
-   animation : an 3s 6;
+   /*animation : an 3s 6;*/
    border: 2px solid #0ff; 
   } 
-  td { 
-text-shadow: 3px 2px 2px green;
-text-align:center;
-   height: 70px; 
-  width:70px;
-font-size:60px;
-color:orange;
-   border: 1px solid skyblue; 
-  } 
-@keyframes an{
-from{
-background: orange;
-opacity:0.5;
-}
-to{
-background: skyblue:
-opacity:1;
-}
-}
+  td {
+	text-shadow: 3px 2px 2px green;
+	text-align:center;
+	height: 70px; 
+  	width: 70px;
+	font-size:60px;
+	color:orange;
+   	border: 1px solid skyblue; 
+  }
+  #i{
+	  margin: 10% 25%;
+  }
+	/*@keyframes an{
+	from{
+	background: orange;
+	opacity:0.5;
+	}
+	to{
+	background: skyblue:
+	opacity:1;
+	}
+	}*/
  </style>
 </head> 
 <body >
- <table id='i'></table><div id='k'></div>
+<table id='i'></table><div id='k'></div>
 <script>
-var i=0;
-var b=[[9,8,7],[6,5,4],[3,2,10]];
+	var i=0;
+	var b=[[9,8,7],[6,5,4],[3,2,10]];
 (function  (){
 var el=document.getElementById('i');
 for (var j=0; j<3;j++){
