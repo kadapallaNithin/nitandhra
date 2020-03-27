@@ -1,0 +1,254 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.3.3
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+<!-- #region jupyter={"source_hidden": true} -->
+# Movie Review - Naive Bayes
+<!-- #endregion -->
+
+```{python}
+import pandas as pd
+import
+os
+import math
+```
+
+```{python}
+print(os.getcwd())
+fol=os.getcwd()+'/tf.ipynb'
+fol1=open(fol)
+print(fol1)
+```
+
+```{python}
+neg = os.listdir('dataset/txt_sentoken/neg') #neg = !ls dataset/txt_sentoken/neg 
+pos = os.listdir('dataset/txt_sentoken/pos') #!ls dataset/txt_sentoken/pos
+neg_test = !ls dataset/txt_sentoken/neg_test
+pos_test = !ls dataset/txt_sentoken/pos_test
+```
+
+```{python}
+parent_path = "dataset/txt_sentoken/"
+print(len(neg))
+print(len(pos))
+```
+
+```{python}
+vocabu= [{},0,0,0,0]
+```
+
+```{python}
+#vocabu
+```
+
+```{python}
+#global vocabu
+def build_voc():
+    for fol in [('neg/',neg,0),('pos/',pos,1)]:
+        vocabu[3+fol[2]] = len(fol[1])
+        for fil in fol[1]:
+            if os.path.exists(parent_path+fol[0]+fil):
+                for line in open(parent_path+fol[0]+fil,'r').read().split(sep='\n'):
+                    for word in line.split(sep=' '):
+                        if word in vocabu[0]:
+                            vocabu[0][word][fol[2]] += 1
+                        else:
+                            vocabu[0][word] = [0,0]
+                            vocabu[0][word][fol[2]] = 1
+                        vocabu[fol[2]+1] += 1
+            else:
+                print("Something fishy")
+build_voc()
+```
+
+```{python}
+  #pd.read_csv(dire+'neg/'+neg[0],sep=' ')
+```
+
+```{python}
+#vocabu
+```
+
+```{python}
+def freq(fil):
+    vect = {}
+    wc = 0
+    for line in open(fil,'r').read().split(sep='\n'):
+        for word in line.split(sep=' '):
+            #if word in vocab:
+            if word in vect:
+                vect[word] += 1
+            else:
+                vect[word] = 1
+            wc += 1
+    return (vect,wc)
+#freq('dataset/txt_sentoken/pos/cv086_18371.txt')                
+```
+
+```{python}
+#global vocabu
+def naive_bayes(f):
+    vect,wc = freq(f)
+    posi = 0
+    nega = 0 #probability
+    #print(vect.keys())
+    for word in vect.keys():
+        if word in vocabu[0]:
+            l = vocabu[0][word]
+            if l[0] == 0:
+                #print(k)
+                l[0] = 1
+            if l[1] == 0:
+                l[1] = 1
+                #print(k)
+            n = l[0]/vocabu[1]
+            p = l[1]/vocabu[2]
+            nega += math.log10(n)*vect[word]
+            posi += math.log10(p)*vect[word]
+            #print(p)
+        #else:
+            #print(k+' is not in vocabulary ')
+    #print(nega,posi)
+    if nega > posi:
+        return (0,(vect,wc))
+    return (1,(vect,wc))
+#    return (10**nega,10**posi)
+```
+
+```{python}
+naive_bayes('dataset/txt_sentoken/pos_test/cv041_21113.txt')[0]
+```
+
+```{python}
+crt = 0
+incrt = list()
+eq = 0
+total = 0
+for f in neg_test:
+    x = naive_bayes('dataset/txt_sentoken/neg_test/'+f)
+    if x[0] == 0:#x == 'negative':#x[0] > x[1]:
+        crt += 1
+    #elif x[0] == x[0]:
+    #    eq += 1
+    else:
+        incrt.append(x[1])
+    total += 1
+for f in pos_test:
+    x = naive_bayes('dataset/txt_sentoken/pos_test/'+f)
+    if x[0] == 1:#x == 'positive':#x[0] < x[1]:
+        crt += 1
+    #elif x[0] == x[1]:
+    #    eq += 1
+    else:
+        incrt.append((x[1]))
+    total += 1
+print(crt,total,crt/total*100, "% accurate")
+
+```
+
+```{python}
+
+```
+
+```{python}
+#global vocabu
+def naive_bayes(f):
+    vect,wc = freq(f)
+    posi = 1
+    nega = 1 #probability
+    #print(vect.keys())
+    for word in vect.keys():
+        if word in vocabu[0]:
+            l = vocabu[0][word]
+            if l[0] == 0:
+                #print(k)
+                l[0] = 1
+            if l[1] == 0:
+                l[1] = 1
+                #print(k)
+            n = l[0]/vocabu[1]
+            p = l[1]/vocabu[2]
+            nega *= (n*700)**vect[word]
+            posi *= (p*700)**vect[word]
+            #print(p)
+        #else:
+            #print(k+' is not in vocabulary ')
+    return (nega,posi)
+
+```
+
+```{python}
+#global vocabu
+def naive_bayes(f):
+    vect,wc = freq(f)
+    posi = 1
+    nega = 1 #probability
+    #print(vect.keys())
+    for word in vocabu[0].keys():#vect.keys():
+        #if word in vocabu[0]:
+        l = vocabu[0][word]
+        if l[0] == 0:
+                #print(k)
+            l[0] = 1
+        if l[1] == 0:
+            l[1] = 1
+                #print(k)
+        wrd_pr = (l[0]+l[1])/(vocabu[3]+vocabu[4])
+        if word in vect:#present:
+            n = (l[0]/vocabu[1])/wrd_pr #pr(word=present|neg)/pr(word) #l[0]/vocabu[1]
+            p = (l[1]/vocabu[2])/wrd_pr
+        else:
+            n = ((vocabu[3] - l[0])/vocabu[1])/wrd_pr
+            p = ((vocabu[4] - l[1])/vocabu[2])/wrd_pr #pr(word=not_present|pos)/pr(word)
+        nega *= n#(n*700)**vect[word]
+        posi *= n#(p*700)**vect[word]
+            #print(p)
+        #else:
+            #print(k+' is not in vocabulary ')
+    return (nega*(vocabu[3]/(vocabu[3]+vocabu[4])),posi*(vocabu[4]/(vocabu[3]+vocabu[4])))
+crt = 0
+eq = 0
+total = 0
+for f in neg_test:
+    x = naive_bayes('dataset/txt_sentoken/neg_test/'+f)
+    if x == 'negative':#x[0] > x[1]:
+        crt += 1
+    #elif x[0] == x[0]:
+    #    eq += 1
+    total += 1
+for f in pos_test:
+    x = naive_bayes('dataset/txt_sentoken/pos_test/'+f)
+    if x == 'positive':#x[0] < x[1]:
+        crt += 1
+    #elif x[0] == x[1]:
+    #    eq += 1
+    total += 1
+print(crt,total,crt/total*100,eq ,"% accurate")
+
+```
+
+```{python}
+# !ls dataset/txt_sentoken/neg_test/
+```
+
+```{python}
+#df = pd.DataFrame(vocab,index=vocab.keys())
+```
+
+```{python}
+naive_bayes('dataset/txt_sentoken/pos_test/cv005_29443.txt')
+```
+
+```{python}
+
+```
