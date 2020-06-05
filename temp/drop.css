@@ -1,0 +1,57 @@
+
+/*
+<div id='bottle'>
+<div class='drop'></div>
+</div>
+*/
+#bottle{
+background:#3498DB;
+width:100%;
+max-width:150px;
+height:200px;
+border-radius:15% ;
+}
+div {
+  margin: 17px auto;
+}
+
+.drop {
+  position: relative;
+	width: 10px;
+	height: 10px;
+  top: -20px;
+  margin: 0 auto;
+	background: #fff;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+  -moz-animation-name: drip;
+  -webkit-animation-name: drip;
+  animation-name: drip;
+  -moz-animation-timing-function: cubic-bezier(1,0,.91,.19);
+  -webkit-animation-timing-function: cubic-bezier(1,0,.91,.19);
+  animation-timing-function: cubic-bezier(1,0,.91,.19);
+  -moz-animation-duration: 0.9s;
+  -webkit-animation-duration: 0.9s;
+  animation-duration: 0.9s;
+  -moz-animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.drop:before {
+  content: "";
+  position: relative;/*absolute;*/
+  width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 30px solid rgba(255,255,255,1);
+  top: -40px;
+}
+
+@keyframes drip {
+    to {
+      top: 190px;
+    }
+}
