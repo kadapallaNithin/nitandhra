@@ -20,7 +20,9 @@
 		#board_id {
 			margin: 10% 25%;
 		}
-
+		.ce{
+			margin: 0 25%;
+		}
 		/*@keyframes an{
 	from{
 	background: orange;
@@ -32,31 +34,50 @@
 	}
 	}*/
 	</style>
-	<script src="minimax.js"></script>
 	<script src="Tree.js"></script>
+	<script src="minimax.js"></script>
+	
 </head>
 
 <body>
 	<table id="board_id"></table>
 	<div id="k"></div>
+	<button class="ce" onclick="window.location.assign(window.location.href);">Play Again</button>
 	<script>
 		// counts number of steps
-		var steps = 0;
-
+		var steps = 0;// use path.length instead
+		// path in minimax tree
+		var path = [];
 		/*
 		board - board for tictactoe
 		values 0,1 are for X and O respectively
 		NOTE board[2][2] is not 1 for this reason
 		*/
 		var board = [[9, 8, 7], [6, 5, 4], [3, 2, 10]];
+		var minimaxtree = minimax();
 		(function () {
 			var el = document.getElementById('board_id');
 			for (var j = 0; j < 3; j++) {
 				// id of a cell is <row#><col#>
 				el.innerHTML += "<tr><td id='" + j + "0' onclick='tic(this)'> </td><td id='" + j + "1' onclick='tic(this)'> </td><td id='" + j + "2' onclick='tic(this)'> </td></tr>";
 			}
+
 		})();
-		function tic(cell) {
+		function next_tic(){//temporary def
+			var i = node_on_path(minimaxtree,path).obj[1];
+//			for(var i=0; i<9; i++){
+				
+				var row = parseInt(i/3);
+				var c = board[row][i%3];
+				if( c != 0 && c != 1){
+					var el = document.getElementById(row.toString()+(i%3));
+					tic(el,false);
+					return;
+				}
+
+//			}
+		}
+		function tic(cell,call_next_tic=true) {
 			var row = cell.id.charAt(0);
 			var col = cell.id.charAt(1);
 			if (steps < 9 && board[row][col] > 1) {
@@ -68,6 +89,7 @@
 					board[row][col] = 1;
 				}
 				steps++;
+				path.push(parseInt(row)*3+parseInt(col));
 				var l = check();
 				if (l >= 0 && l < 3) {
 					if (steps % 2 == 0) {
@@ -82,7 +104,15 @@
 				}
 				if (steps > 8) {
 					alert("Draw");
+					return;
 				}
+//				alert(call_next_tic);
+				if(call_next_tic == true){
+					next_tic();
+				}else{
+					console.log('no tick');
+				}
+					
 			}
 		}
 		function check() {
