@@ -22,6 +22,10 @@ function mini(root) {
 			if (minim > root.children[child].obj[0]) {
 				minim = root.children[child].obj[0];
 				minkey = root.children[child].key;
+			}else if (minim == root.children[child].obj[0]) {
+				if(Math.random() > 0.5){
+					minkey = root.children[child].key;
+				}
 			}
 		}
 		return [minim, minkey];
@@ -153,7 +157,7 @@ function minimax() {
 	//console.log(minimaxtree);
 	maxi_build(minimaxtree, tree_board, count);
 	return minimaxtree;
-};
+}
 /*
 partially complete
 */
@@ -182,11 +186,11 @@ function next_optimal_choice(state,root){
 function node_on_path(root,path){
 	var ptr = root;
 	for(var nd in path){
-		console.log('nd',nd);
+//		console.log('nd',nd);
 		for(var c in ptr.children){
-			console.log('children',c);
+//			console.log('children',c);
 			if(ptr.children[c].key == path[nd]){
-				console.log('match',c);
+//				console.log('match',c);
 				ptr = ptr.children[c];
 				break;
 			}

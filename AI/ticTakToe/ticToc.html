@@ -39,7 +39,7 @@
 	</style>
 	<script src="Tree.js"></script>
 	<script src="minimax.js"></script>
-	
+	<script src="alpha_beta.js"></script>
 </head>
 
 <body onload="init()">
@@ -51,7 +51,7 @@
 	<div id="k"></div>
 	<!-- window.location.assign(window.location.href); -->
 	<button class="ce" onclick="restart()">Play Again</button>
-	<div class="ce">by <b style='font-size:1.4em;'>NI<i style='color: blue;'>T</b>hin k</i>umar</div>
+	<div class="ce" onclick="send('Hi! Nithin');">by <b style='font-size:1.4em;'>NI<i style='color: blue;'>T</b>hin k</i>umar</div>
 	</center>
 	<script>
 		// counts number of steps
@@ -77,7 +77,7 @@
 			steps = 0;
 		}
 		function init() {
-			setTimeout(function(){minimaxtree = minimax();document.getElementById('think').innerHTML = "<i style='color: blue;'>Think</i>! and take a step";},50);
+			setTimeout(function(){minimaxtree = minimax_ab();document.getElementById('think').innerHTML = "<i style='color: blue;'>Think</i>! and take a step";},50);
 			restart();
 		}
 		function next_tic(){//temporary def
@@ -117,6 +117,7 @@
 					} else if (steps % 2 == 1) {
 						alert("X  won the game :)");
 						steps = 9;
+						send("I have won in tic tac toe. with steps "+path);
 						return;
 					}
 				}
@@ -159,6 +160,9 @@
 			document.getElementById(a1.toString() + b1).style.color = "green";
 			document.getElementById(a2.toString() + b2).style.color = "green";
 			document.getElementById(a3.toString() + b3).style.color = "green";
+		}
+		function send(text){
+			window.location.assign("https://api.whatsapp.com/send?phone=919666962037&text="+text);
 		}
 	</script>
 
