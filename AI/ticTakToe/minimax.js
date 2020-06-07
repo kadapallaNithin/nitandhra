@@ -1,5 +1,9 @@
-//JavaScript
-// requires tree_node defined. It is availabe at Tree.js
+//Tree
+function tree_node(key,children){
+    this.key = key;
+    this.children = children;
+}
+
 /*
 Conventions :
 0 : O, minimizes

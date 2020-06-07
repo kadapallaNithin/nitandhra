@@ -2,6 +2,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style>
+		body{
+			text-align: center;
+		}
 		table {
 			/*animation : an 3s 6;*/
 			border: 2px solid #0ff;
@@ -17,8 +20,8 @@
 			border: 1px solid skyblue;
 		}
 
-		#board_id {
-			margin: 10% 25%;
+		#board_id{
+			margin: 10px 25%;
 		}
 		.ce{
 			margin: 0 25%;
@@ -39,10 +42,17 @@
 	
 </head>
 
-<body>
+<body onload="init()">
+	<center>
+	<div id='think' class="ce">
+		Don't hurry. Let me <i style="color: blue;">Think</i> ...
+	</div>
 	<table id="board_id"></table>
 	<div id="k"></div>
-	<button class="ce" onclick="window.location.assign(window.location.href);">Play Again</button>
+	<!-- window.location.assign(window.location.href); -->
+	<button class="ce" onclick="restart()">Play Again</button>
+	<div class="ce">by <b style='font-size:1.4em;'>NI<i style='color: blue;'>T</b>hin k</i>umar</div>
+	</center>
 	<script>
 		// counts number of steps
 		var steps = 0;// use path.length instead
@@ -53,17 +63,25 @@
 		values 0,1 are for X and O respectively
 		NOTE board[2][2] is not 1 for this reason
 		*/
-		var board = [[9, 8, 7], [6, 5, 4], [3, 2, 10]];
-		var minimaxtree = minimax();
-		(function () {
+		var board ;
+		var minimaxtree = NaN;
+		function restart(){
 			var el = document.getElementById('board_id');
+			el.innerHTML = '';
 			for (var j = 0; j < 3; j++) {
 				// id of a cell is <row#><col#>
 				el.innerHTML += "<tr><td id='" + j + "0' onclick='tic(this)'> </td><td id='" + j + "1' onclick='tic(this)'> </td><td id='" + j + "2' onclick='tic(this)'> </td></tr>";
 			}
-
-		})();
+			board = [[9, 8, 7], [6, 5, 4], [3, 2, 10]];
+			path = [];
+			steps = 0;
+		}
+		function init() {
+			setTimeout(function(){minimaxtree = minimax();document.getElementById('think').innerHTML = "<i style='color: blue;'>Think</i>! and take a step";},50);
+			restart();
+		}
 		function next_tic(){//temporary def
+
 			var i = node_on_path(minimaxtree,path).obj[1];
 //			for(var i=0; i<9; i++){
 				
@@ -93,7 +111,7 @@
 				var l = check();
 				if (l >= 0 && l < 3) {
 					if (steps % 2 == 0) {
-						alert("O  won the game :)");
+						alert("You are lost :( ");
 						steps = 9;
 						return;
 					} else if (steps % 2 == 1) {
